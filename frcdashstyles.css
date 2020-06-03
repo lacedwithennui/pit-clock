@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+form {
+    font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+}
+
+fieldset {
+	width: 410px;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+}
+
+legend {
+	background-color: #191919;
+	color: #EAEAEA;
+	border: 1px solid #161616;
+	border-radius: 3px;
+	padding: 7px;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+}
+
+input {
+	background-color: #191919;
+	color: #EAEAEA;
+	border: 2px solid #161616;
+	border-radius: 3px;
+}
+
+input:focus {
+	background-color: #191919;
+}
+
+p {
+	padding: 7px;
+	font-size: 13pt;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+}
+
+input[type="text"] {
+	height: 13pt;
+	/*padding: 2px;*/
+}
+
+input[type="submit"] {
+	padding: 7px;
+	border: 2px solid #161616;
+	border-radius: 3px;
+}
