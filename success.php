@@ -2,11 +2,23 @@
 <html>
     <head>
         <title>Your Information</title>
-        <link rel="stylesheet" href="frcdashstyles.css">
+        <link rel="stylesheet" href="dashstyles.css">
     </head>
     <body>
         <div id="phpHolder">
             <?php
+                //This function will be to check the alliance of a given match, used to shorten its following function.
+                function checkAlliance($match_number, $output_array, $team_key, $checked_array) {
+                    if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
+                        //Add our match number and alliance color to the match type's array as an array
+                        $match_info = array($match_number, "blue");
+                        array_push($output_array, $match_info);
+                    }
+                    elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
+                        $match_info = array($match_number, "red");
+                        array_push($output_array, $match_info);
+                    }
+                }
                 //This function is responsible for sorting our data, printing it in a human-readable format, and storing more info about a match. It needs an array that's been decoded from JSON for most of that, and a team key so it can see what alliance we're in
                 function getAllMatches($array, $team_key) {
                     //Set up arrays for every type of match (necessary for sorting matches by type)
@@ -22,61 +34,24 @@
                         //Check the match's type from the data TBA gave us
                         switch($checked_array['comp_level']) {
                             case "qm":
-                                //Check if our alliance is blue or red
-                                if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
-                                    //Add our match number and alliance color to the match type's array as an array
-                                    $match_info = array($match_number, "blue");
-                                    array_push($quals, $match_info);
-                                }
-                                elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
-                                    $match_info = array($match_number, "red");
-                                    array_push($quals, $match_info);
-                                }
+                                //Check if our alliance is blue or red using the first function
+                                checkAlliance($match_number, $quals, $team_key, $checked_array);
                                 break;
                             case "ef":
-                                if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
-                                    $match_info = array($match_number, "blue");
-                                    array_push($eighths, $match_info);
-                                }
-                                elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
-                                    $match_info = array($match_number, "red");
-                                    array_push($eighths, $match_info);
-                                }
+                                checkAlliance($match_number, $eighths, $team_key, $checked_array);
                                 break;
                             case "qf":
-                                if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
-                                    $match_info = array($match_number, "blue");
-                                    array_push($quarters, $match_info);
-                                }
-                                elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
-                                    $match_info = array($match_number, "red");
-                                    array_push($quarters, $match_info);
-                                }
+                                checkAlliance($match_number, $quarters, $team_key, $checked_array);
                                 break;
                             case "sf":
-                                if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
-                                    $match_info = array($match_number, "blue");
-                                    array_push($semis, $match_info);
-                                }
-                                elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
-                                    $match_info = array($match_number, "red");
-                                    array_push($semis, $match_info);
-                                }
+                                checkAlliance($match_number, $semis, $team_key, $checked_array);
                                 break;
                             case "f":
-                                if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
-                                    $match_info = array($match_number, "blue");
-                                    array_push($finals, $match_info);
-                                }
-                                elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
-                                    $match_info = array($match_number, "red");
-                                    array_push($finals, $match_info);
-                                }
+                                checkAlliance($match_number, $finals, $team_key, $checked_array);
                                 break;
                             default:
                                 //If there's no match type, add the match number to its own category that we can deal with later
-                                $match_type = "No match type ";
-                                array_push($none, $match_number);
+                                checkAlliance($match_number, $none, $team_key, $checked_array);
                                 break;
                         }
                     }
