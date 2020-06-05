@@ -16,14 +16,7 @@
                     $semis = array();
                     $finals = array();
                     $none = array();
-                    
-                    $quals_nums = array();
-                    $eighths_nums = array();
-                    $quarters_nums = array();
-                    $semis_nums = array();
-                    $finals_nums = array();
-                    $none_nums = array();
-                    
+                    //Now let's add match info to each array
                     foreach($array as $checked_array) {
                         $match_number = $checked_array['match_number'];
                         //Check the match's type from the data TBA gave us
@@ -34,73 +27,61 @@
                                     //Add our match number and alliance color to the match type's array as an array
                                     $match_info = array($match_number, "blue");
                                     array_push($quals, $match_info);
-                                    array_push($quals_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($quals, $match_info);
-                                    array_push($quals_nums, $match_number);
                                 }
                                 break;
                             case "ef":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($eighths, $match_info);
-                                    array_push($eighths_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($eighths, $match_info);
-                                    array_push($eighths_nums, $match_number);
                                 }
                                 break;
                             case "qf":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($quarters, $match_info);
-                                    array_push($quarters_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($quarters, $match_info);
-                                    array_push($quarters_nums, $match_number);
                                 }
                                 break;
                             case "sf":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($semis, $match_info);
-                                    array_push($semis_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($semis, $match_info);
-                                    array_push($semis_nums, $match_number);
                                 }
                                 break;
                             case "f":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($finals, $match_info);
-                                    array_push($finals_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($finals, $match_info);
-                                    array_push($finals_nums, $match_number);
                                 }
                                 break;
                             default:
                                 //If there's no match type, add the match number to its own category that we can deal with later
                                 $match_type = "No match type ";
                                 array_push($none, $match_number);
-                                array_push($none_nums, $match_number);
                                 break;
                         }
                     }
                     //Let's sort some stuff with an unnecessarily long function because PHP sucks (not as much as JS though, you can quote me).
                     $matches = array($quals, $eighths, $quarters, $semis, $finals, $none);
-                    $match_nums = array($quals_nums, $eighths_nums, $quarters_nums, $semis_nums, $finals_nums, $none_nums);
                     $matches_sorted = array();
                     function itemsort(&$array, $key) {
                         $sorter=array();
