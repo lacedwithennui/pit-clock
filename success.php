@@ -3,33 +3,27 @@
     <head>
         <title>Your Information</title>
         <link rel="stylesheet" href="frcdashstyles.css">
-        <style>
-            p, h1, h2, h3 {
-                font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
-            }
-            .keys {
-                color: green;
-            }
-            .bluealliance {
-                color: blue;
-            }
-            .redalliance {
-                color: red;
-            }
-        </style>
     </head>
     <body>
         <div id="phpHolder">
             <?php
                 //This function is responsible for sorting our data, printing it in a human-readable format, and storing more info about a match. It needs an array that's been decoded from JSON for most of that, and a team key so it can see what alliance we're in
                 function getAllMatches($array, $team_key) {
-                    //Set up arrays for every type of match (necessary for sorting matches by type
+                    //Set up arrays for every type of match (necessary for sorting matches by type)
                     $quals = array();
                     $eighths = array();
                     $quarters = array();
                     $semis = array();
                     $finals = array();
                     $none = array();
+                    
+                    $quals_nums = array();
+                    $eighths_nums = array();
+                    $quarters_nums = array();
+                    $semis_nums = array();
+                    $finals_nums = array();
+                    $none_nums = array();
+                    
                     foreach($array as $checked_array) {
                         $match_number = $checked_array['match_number'];
                         //Check the match's type from the data TBA gave us
@@ -40,61 +34,93 @@
                                     //Add our match number and alliance color to the match type's array as an array
                                     $match_info = array($match_number, "blue");
                                     array_push($quals, $match_info);
+                                    array_push($quals_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($quals, $match_info);
+                                    array_push($quals_nums, $match_number);
                                 }
                                 break;
                             case "ef":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($eighths, $match_info);
+                                    array_push($eighths_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($eighths, $match_info);
+                                    array_push($eighths_nums, $match_number);
                                 }
                                 break;
                             case "qf":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($quarters, $match_info);
+                                    array_push($quarters_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($quarters, $match_info);
+                                    array_push($quarters_nums, $match_number);
                                 }
                                 break;
                             case "sf":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($semis, $match_info);
+                                    array_push($semis_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($semis, $match_info);
+                                    array_push($semis_nums, $match_number);
                                 }
                                 break;
                             case "f":
                                 if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                                     $match_info = array($match_number, "blue");
                                     array_push($finals, $match_info);
+                                    array_push($finals_nums, $match_number);
                                 }
                                 elseif(in_array($team_key, $checked_array['alliances']['red']['team_keys'])){
                                     $match_info = array($match_number, "red");
                                     array_push($finals, $match_info);
+                                    array_push($finals_nums, $match_number);
                                 }
                                 break;
                             default:
                                 //If there's no match type, add the match number to its own category that we can deal with later
                                 $match_type = "No match type ";
                                 array_push($none, $match_number);
+                                array_push($none_nums, $match_number);
                                 break;
                         }
                     }
-                    //Here, we can print out all of our values.
-                    foreach($quals as $match) {
+                    //Let's sort some stuff with an unnecessarily long function because PHP sucks (not as much as JS though, you can quote me).
+                    $matches = array($quals, $eighths, $quarters, $semis, $finals, $none);
+                    $match_nums = array($quals_nums, $eighths_nums, $quarters_nums, $semis_nums, $finals_nums, $none_nums);
+                    $matches_sorted = array();
+                    function itemsort(&$array, $key) {
+                        $sorter=array();
+                        $ret=array();
+                        reset($array);
+                        foreach ($array as $ii => $va) {
+                            $sorter[$ii]=$va[$key];
+                        }
+                        asort($sorter);
+                        foreach ($sorter as $ii => $va) {
+                            $ret[$ii]=$array[$ii];
+                        }
+                        $array=$ret;
+                    }
+                    foreach($matches as $unsorted) {
+                        itemsort($unsorted, "0");
+                        array_push($matches_sorted, $unsorted);
+                    }
+                    //Here, we can print out all of our values
+                    foreach($matches_sorted[0] as $match) {
                         //If the match's info has "blue" or "red" in it, add a class to the text that corresponds to the color. CSS can then deal with that and color the text accordingly.
                         if($match[1] == "blue") {
                             echo "<p class='bluealliance'>" . "Qualifiers Match " . $match[0] . "</p>";
@@ -103,7 +129,7 @@
                             echo "<p class='redalliance'>" . "Qualifiers Match " . $match[0] . "</p>";
                         }
                     }
-                    foreach($eighths as $match) {
+                    foreach($matches_sorted[1] as $match) {
                         if($match[1] == "blue") {
                             echo "<p class='bluealliance'>" . "Eighths Finals Match " . $match[0] . "</p>";
                         }
@@ -111,7 +137,7 @@
                             echo "<p class='redalliance'>" . "Eighths Finals Match " . $match[0] . "</p>";
                         }
                     }
-                    foreach($quarters as $match) {
+                    foreach($matches_sorted[2] as $match) {
                         if($match[1] == "blue") {
                             echo "<p class='bluealliance'>" . "Quarterfinals Match " . $match[0] . "</p>";
                         }
@@ -119,7 +145,7 @@
                             echo "<p class='redalliance'>" . "Quarterfinals Match " . $match[0] . "</p>";
                         }
                     }
-                    foreach($semis as $match) {
+                    foreach($matches_sorted[3] as $match) {
                         if($match[1] == "blue") {
                             echo "<p class='bluealliance'>" . "Semifinals Match " . $match[0] . "</p>";
                         }
@@ -127,7 +153,7 @@
                             echo "<p class='redalliance'>" . "Semifinals Match " . $match[0] . "</p>";
                         }
                     }
-                    foreach($finals as $match) {
+                    foreach($matches_sorted[5] as $match) {
                         if($match[1] == "blue") {
                             echo "<p class='bluealliance'>" . "Finals Match " . $match[0] . "</p>";
                         }
@@ -135,7 +161,7 @@
                             echo "<p class='redalliance'>" . "Finals Match " . $match[0] . "</p>";
                         }
                     }
-                    foreach($none as $match) {
+                    foreach($matches_sorted[5] as $match) {
                         if($match[1] == "blue") {
                             echo "<p class='bluealliance'>" . "[No Type Specified] Match " . $match[0] . "</p>";
                         }
