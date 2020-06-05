@@ -7,8 +7,15 @@
     <body>
         <div id="phpHolder">
             <?php
+                //Set up arrays for every type of match (necessary for sorting matches by type)
+                $quals = array();
+                $eighths = array();
+                $quarters = array();
+                $semis = array();
+                $finals = array();
+                $none = array();
                 //This function will be to check the alliance of a given match, used to shorten its following function.
-                function checkAlliance($match_number, $output_array, $team_key, $checked_array) {
+                function checkAlliance($match_number, &$output_array, $team_key, $checked_array) {
                     if(in_array($team_key, $checked_array['alliances']['blue']['team_keys'])){
                         //Add our match number and alliance color to the match type's array as an array
                         $match_info = array($match_number, "blue");
@@ -21,13 +28,7 @@
                 }
                 //This function is responsible for sorting our data, printing it in a human-readable format, and storing more info about a match. It needs an array that's been decoded from JSON for most of that, and a team key so it can see what alliance we're in
                 function getAllMatches($array, $team_key) {
-                    //Set up arrays for every type of match (necessary for sorting matches by type)
-                    $quals = array();
-                    $eighths = array();
-                    $quarters = array();
-                    $semis = array();
-                    $finals = array();
-                    $none = array();
+                    global $quals, $eighths, $quarters, $semis, $finals, $none;
                     //Now let's add match info to each array
                     foreach($array as $checked_array) {
                         $match_number = $checked_array['match_number'];
