@@ -26,6 +26,15 @@
                         array_push($output_array, $match_info);
                     }
                 }
+                //This function can print our matches, their types, and their colors when given a $match_type string and the match's info.
+                function printMatch($match, $match_type) {
+                    if($match[1] == "blue") {
+                        echo "<p class='bluealliance'>" . $match_type . " Match " . $match[0] . "</p>";
+                    }
+                    elseif($match[1] == "red") {
+                        echo "<p class='redalliance'>" . $match_type . " Match " . $match[0] . "</p>";
+                    }
+                }
                 //This function is responsible for sorting our data, printing it in a human-readable format, and storing more info about a match. It needs an array that's been decoded from JSON for most of that, and a team key so it can see what alliance we're in
                 function getAllMatches($array, $team_key) {
                     global $quals, $eighths, $quarters, $semis, $finals, $none;
@@ -78,54 +87,22 @@
                     }
                     //Here, we can print out all of our values
                     foreach($matches_sorted[0] as $match) {
-                        //If the match's info has "blue" or "red" in it, add a class to the text that corresponds to the color. CSS can then deal with that and color the text accordingly.
-                        if($match[1] == "blue") {
-                            echo "<p class='bluealliance'>" . "Qualifiers Match " . $match[0] . "</p>";
-                        }
-                        elseif($match[1] == "red") {
-                            echo "<p class='redalliance'>" . "Qualifiers Match " . $match[0] . "</p>";
-                        }
+                        printMatch($match, "Qualifiers");
                     }
                     foreach($matches_sorted[1] as $match) {
-                        if($match[1] == "blue") {
-                            echo "<p class='bluealliance'>" . "Eighths Finals Match " . $match[0] . "</p>";
-                        }
-                        elseif($match[1] == "red") {
-                            echo "<p class='redalliance'>" . "Eighths Finals Match " . $match[0] . "</p>";
-                        }
+                        printMatch($match, "Eighths");
                     }
                     foreach($matches_sorted[2] as $match) {
-                        if($match[1] == "blue") {
-                            echo "<p class='bluealliance'>" . "Quarterfinals Match " . $match[0] . "</p>";
-                        }
-                        elseif($match[1] == "red") {
-                            echo "<p class='redalliance'>" . "Quarterfinals Match " . $match[0] . "</p>";
-                        }
+                        printMatch($match, "Quarterfinals");
                     }
                     foreach($matches_sorted[3] as $match) {
-                        if($match[1] == "blue") {
-                            echo "<p class='bluealliance'>" . "Semifinals Match " . $match[0] . "</p>";
-                        }
-                        elseif($match[1] == "red") {
-                            echo "<p class='redalliance'>" . "Semifinals Match " . $match[0] . "</p>";
-                        }
+                        printMatch($match, "Semis");
                     }
                     foreach($matches_sorted[5] as $match) {
-                        if($match[1] == "blue") {
-                            echo "<p class='bluealliance'>" . "Finals Match " . $match[0] . "</p>";
-                        }
-                        elseif($match[1] == "red") {
-                            echo "<p class='redalliance'>" . "Finals Match " . $match[0] . "</p>";
-                        }
+                        printMatch($match, "Finals");
                     }
                     foreach($matches_sorted[5] as $match) {
-                        if($match[1] == "blue") {
-                            echo "<p class='bluealliance'>" . "[No Type Specified] Match " . $match[0] . "</p>";
-                        }
-                        elseif($match[1] == "red") {
-                            echo "<p class='redalliance'>" . "[No Type Specified] Match " . $match[0] . "</p>";
-                        }
-                    }
+                        printMatch($match, "No match type specified");
                 }
                 //Here, stuff actually runs.
                 //If the team_key and event_key came from the input page, do stuff
