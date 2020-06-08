@@ -103,6 +103,7 @@
                     }
                     foreach($matches_sorted[5] as $match) {
                         printMatch($match, "No match type specified");
+                    }
                 }
                 //Here, stuff actually runs.
                 //If the team_key and event_key came from the input page, do stuff
