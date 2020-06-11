@@ -135,7 +135,7 @@
 					else {
                     	$team_key = "frc" . $_POST["team_key"];
 					}
-                    $api_key = "QszNNcJIpRcbbF8UIiU5WmqByHfIGaNFrTVcYR39DPlKft0Axtf31BXUL5rCmre4";
+                    $api_key = "";
 					$event_request_url = "https://www.thebluealliance.com/api/v3/team/".$team_key."/events/simple?X-TBA-Auth-Key=".$api_key;
 					$event_response = file_get_contents($event_request_url);
 					$decoded_event = json_decode($event_response, true);
