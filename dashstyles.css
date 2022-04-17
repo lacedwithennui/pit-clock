@@ -1,7 +1,29 @@
 @charset "UTF-8";
 
-p, h1, h2, h3, h4, h5  {
+p, h1, h2, h3, h4, h5, td, th  {
     font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+}
+
+h1 {
+    font-size: 90pt;
+    padding-top: 0;
+    margin-top: 0;
+}
+
+#counterDiv {
+    display: inline-block;
+    position: relative;
+    float: right;
+    margin-top: 0;
+    width: 71.3%;
+    padding: 0 4.1%;
+}
+
+#matches {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 14.5%;
 }
 
 .keys {
@@ -14,4 +36,8 @@ p, h1, h2, h3, h4, h5  {
 
 .redalliance {
     color: red;
+}
+
+.match {
+    font-size: 120%;
 }
