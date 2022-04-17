@@ -14,6 +14,7 @@
                 $finals = array();
                 $none = array();
 				$matches_sorted = array();
+                $next_match = array();
                 $team_key;
                 function addMatchInfo(&$output_array, $checked_array, $match_type) {
                     global $team_key;
@@ -61,18 +62,18 @@
                     echo "<tr>";
                     for($i = 0; $i < sizeof($match[3]); $i++) {
                         if($match[3][$i] == $team_key) {
-                            echo "<td class='redalliance'>".$match[3][$i]."</td>";
+                            echo "<td class='redalliance'>".str_replace("frc", "", $match[3][$i])."</td>";
                         }
                         else {
-                            echo "<td>".$match[3][$i]."</td>";
+                            echo "<td>".str_replace("frc", "", $match[3][$i])."</td>";
                         }
                     }
                     for($i = 0; $i < sizeof($match[4]); $i++) {
                         if($match[4][$i] == $team_key) {
-                            echo "<td class='bluealliance'>".$match[4][$i]."</td>";
+                            echo "<td class='bluealliance'>".str_replace("frc", "", $match[4][$i])."</td>";
                         }
                         else {
-                            echo "<td>".$match[4][$i]."</td>";
+                            echo "<td>".str_replace("frc", "", $match[4][$i])."</td>";
                         }
                     }
                     echo "</tr>";
@@ -142,6 +143,48 @@
 						}
 					}
                 }
+                function virtualKettering() {
+                    global $team_key, $matches_sorted;
+                    echo "<div id='ketteringWrapper'>";
+                    echo "<table id='kettering'>";
+                    echo "<tr>";
+                    echo "<th>Match</th>";
+                    for($i = 0; $i < sizeof($matches_sorted[0][0][3]); $i++) {
+                        echo "<th>Red ".($i+1)."</th>";
+                    }
+                    for($i = 0; $i < sizeof($matches_sorted[0][0][4]); $i++) {
+                        echo "<th>Blue ".($i+1)."</th>";
+                    }
+                    echo "<th>Predicted Time</th>";
+                    echo "</tr>";
+                    
+                    foreach($matches_sorted as $matches) {
+                        foreach($matches as $match) {
+                            echo "<tr>";
+                            echo "<td>".$match[7]." ".$match[0]."</td>";
+                            for($i = 0; $i < sizeof($match[3]); $i++) {
+                                if($match[3][$i] == $team_key) {
+                                    echo "<td class='redalliance'>".str_replace("frc", "", $match[3][$i])."</td>";
+                                }
+                                else {
+                                    echo "<td>".str_replace("frc", "", $match[3][$i])."</td>";
+                                }
+                            }
+                            for($i = 0; $i < sizeof($match[4]); $i++) {
+                                if($match[4][$i] == $team_key) {
+                                    echo "<td class='bluealliance'>".str_replace("frc", "", $match[4][$i])."</td>";
+                                }
+                                else {
+                                    echo "<td>".str_replace("frc", "", $match[4][$i])."</td>";
+                                }
+                            }
+                            echo "<td>".date("M d H:i:s", $match[5])."</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    echo "</table>";
+                    echo "</div>";
+                }
                 if(isset($_POST["team_key"]) && isset($_POST["event_key"])) {
 					if(strpos($_POST["team_key"], "frc") !== false) {
 						$team_key = $_POST["team_key"];
@@ -155,11 +198,11 @@
                     $full_url = $request_url . $api_key;
                     $response = file_get_contents($full_url);
                     $decoded_array = json_decode($response, true);
-                    echo "<p>Your Team Key: <span class=keys>$team_key</span></p>";
-                    echo "<p>Your Event Key: <span class=keys>$event_key</span></p>";
-                    echo "<p>Request URL: " . $request_url . "(authkey hidden)</p>";
+                    // echo "<p>Your Team Key: <span class=keys>$team_key</span></p>";
+                    // echo "<p>Your Event Key: <span class=keys>$event_key</span></p>";
+                    // echo "<p>Request URL: " . $request_url . "(authkey hidden)</p>";
                     if($decoded_array) {
-                        echo "<p>All matches in query:</p>";
+                        // echo "<p>All matches in query:</p>";
 						echo "<div id='matches'>";
                         getAllMatches($decoded_array);
 						echo "</div>";
@@ -202,6 +245,7 @@
                 else {
                     header("Location: index.html");
                 }
+                virtualKettering();
             ?>
         </div>
 		<script>
