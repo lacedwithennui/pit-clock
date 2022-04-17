@@ -14,7 +14,7 @@
                 $finals = array();
                 $none = array();
 				$matches_sorted = array();
-                $next_match = array();
+                $next_match;
                 $team_key;
                 function addMatchInfo(&$output_array, $checked_array, $match_type) {
                     global $team_key;
@@ -185,6 +185,39 @@
                     echo "</table>";
                     echo "</div>";
                 }
+                function getNextMatch() {
+                    global $matches_sorted, $next_match;
+                    foreach($matches_sorted as $matches) {
+                        foreach($matches as $match) {
+                            if($match[5] > time()) {
+                                $next_match = $match;
+                            }
+                        }
+                    }
+                    if($next_match == array()) {
+                        // $last_match_type = end(end($matches_sorted));
+                        // $next_match = $last_match_type;
+                        $next_match = $matches_sorted[0][0];
+                        foreach($matches_sorted as $match_type) {
+                            if(!empty($match_type)) {
+                                $next_match = end($match_type);
+                            }
+                        }
+                    }
+                }
+                function nextMatchPanel() {
+                    global $next_match;
+                    getNextMatch();
+                    echo "<div id='nextpanel'>";
+                    echo "<p>Next Match: ".$next_match[7]." ".$next_match[0]."</p>";
+                    if($next_match[1] == "Red") {
+                        echo "<p id='bumper' class='redbg'>5587</p>";
+                    }
+                    elseif($next_match[1] == "Blue") {
+                        echo "<p id='bumper' class='bluebg'>5587</p>";
+                    }
+                    echo "</div>";
+                }
                 if(isset($_POST["team_key"]) && isset($_POST["event_key"])) {
 					if(strpos($_POST["team_key"], "frc") !== false) {
 						$team_key = $_POST["team_key"];
@@ -246,6 +279,7 @@
                     header("Location: index.html");
                 }
                 virtualKettering();
+                nextMatchPanel();
             ?>
         </div>
 		<script>

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 p, h1, h2, h3, h4, h5, td, th  {
-    font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+    font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -31,11 +31,11 @@ h1 {
 }
 
 .bluealliance {
-    color: blue;
+    color: #0066b3;
 }
 
 .redalliance {
-    color: red;
+    color: #ed1c24;
 }
 
 .match {
@@ -52,5 +52,28 @@ h1 {
     float: right;
     margin: 0;
     width: 51.5%;
-    padding: 0 16.75%;
+    /* padding: 0 16.75%; */
+}
+
+#nextpanel {
+    /* display: inline; */
+    position: relative;
+    float: right;
+    width: 18.5%;22z
+    /* clear: left; */
+}
+
+#bumper {
+    font-weight: bold;
+    padding: 20px;
+    color: white;
+    width: max-content;
+    font-size: 4em;
+}
+
+.redbg {
+    background-color: #be2026;
+}
+.bluebg {
+    background-color: #2a397c;
 }
