@@ -4,8 +4,13 @@ p, h1, h2, h3, h4, h5, td, th  {
     font-family: 'Montserrat', sans-serif;
 }
 
+p {
+    font-size: 2.5vw;
+    margin: 0;
+}
+
 h1 {
-    font-size: 90pt;
+    font-size: 9.7vw;
     padding: 0;
     margin: 0;
 }
@@ -15,15 +20,15 @@ h1 {
     position: relative;
     float: right;
     margin: 0;
-    width: 71.3%;
-    padding: 0 4.1%;
+    width: 69%;
+    padding: 0 8.3%;
 }
 
 #matches {
     display: inline-block;
     position: relative;
     float: left;
-    width: 14.5%;
+    width: 14.33%;
 }
 
 .keys {
@@ -39,11 +44,13 @@ h1 {
 }
 
 .match {
-    font-size: 120%;
+    font-size: 1.4vw;
+    margin: 1em 0;
 }
 
 #kettering td, #kettering th {
-    font-size: large;
+    font-size: 1.4vw;
+    padding: 0.3vw;
 }
 
 #ketteringWrapper {
@@ -52,6 +59,7 @@ h1 {
     float: right;
     margin: 0;
     width: 51.5%;
+    padding-right: 8.3%;
     /* padding: 0 16.75%; */
 }
 
@@ -59,16 +67,17 @@ h1 {
     /* display: inline; */
     position: relative;
     float: right;
-    width: 18.5%;22z
+    width: 18.5%;
     /* clear: left; */
 }
 
 #bumper {
     font-weight: bold;
-    padding: 20px;
+    padding: 2vw;
     color: white;
     width: max-content;
-    font-size: 4em;
+    font-size: 6vw;
+    margin: 0;
 }
 
 .redbg {

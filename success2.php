@@ -195,8 +195,6 @@
                         }
                     }
                     if($next_match == array()) {
-                        // $last_match_type = end(end($matches_sorted));
-                        // $next_match = $last_match_type;
                         $next_match = $matches_sorted[0][0];
                         foreach($matches_sorted as $match_type) {
                             if(!empty($match_type)) {
@@ -210,6 +208,7 @@
                     getNextMatch();
                     echo "<div id='nextpanel'>";
                     echo "<p>Next Match: ".$next_match[7]." ".$next_match[0]."</p>";
+                    echo "<p>".$next_match[1]." ".$next_match[0]."</p>";
                     if($next_match[1] == "Red") {
                         echo "<p id='bumper' class='redbg'>5587</p>";
                     }
