@@ -188,13 +188,13 @@
                 function getNextMatch() {
                     global $matches_sorted, $next_match;
                     foreach($matches_sorted as $matches) {
-                        foreach($matches as $match) {
+                        foreach(array_reverse($matches) as $match) {
                             if($match[5] > time()) {
                                 $next_match = $match;
                             }
                         }
                     }
-                    if($next_match == array()) {
+                    if(empty($next_match)) {
                         $next_match = $matches_sorted[0][0];
                         foreach($matches_sorted as $match_type) {
                             if(!empty($match_type)) {
@@ -204,19 +204,28 @@
                     }
                 }
                 function nextMatchPanel() {
-                    global $next_match;
+                    global $next_match, $team_key;
                     getNextMatch();
                     echo "<div id='nextpanel'>";
-                    echo "<p>Next Match: ".$next_match[7]." ".$next_match[0]."</p>";
-                    echo "<p>".$next_match[1]." ".$next_match[0]."</p>";
+                    echo "<p class='nextpanel'>Next Match: ".$next_match[7]." ".$next_match[0]."</p>";
+                    echo "<p class='nextpanel'>".$next_match[1]." ".$next_match[2]."</p>";
                     if($next_match[1] == "Red") {
-                        echo "<p id='bumper' class='redbg'>5587</p>";
+                        echo "<p id='bumper' class='redbg'>".str_replace("frc", "", $team_key)."</p>";
                     }
                     elseif($next_match[1] == "Blue") {
-                        echo "<p id='bumper' class='bluebg'>5587</p>";
+                        echo "<p id='bumper' class='bluebg'>".str_replace("frc", "", $team_key)."</p>";
                     }
                     echo "</div>";
                 }
+                function statusPanel($api_key, $event_key) {
+                    global $team_key;
+                    $request_url = "https://www.thebluealliance.com/api/v3/team/".$team_key."/event/".$event_key."/stuatus?X-TBA-Auth-Key=".$api_key;
+                    $response = file_get_contents($request_url);
+                    $decoded_array = json_decode($response, true);
+                    $status_array = array($decoded_array['qual']);
+                    
+                }
+                date_default_timezone_set("America/North_Dakota/Center");
                 if(isset($_POST["team_key"]) && isset($_POST["event_key"])) {
 					if(strpos($_POST["team_key"], "frc") !== false) {
 						$team_key = $_POST["team_key"];
@@ -239,6 +248,7 @@
                         getAllMatches($decoded_array);
 						echo "</div>";
 						echo "<div id='counterDiv'><h1 id='counter'></h1></div>";
+                        echo "<img src='logo.png' />";
                     }
                     else {
                         echo "<p>No data was returned from The Blue Alliance.</p>";
@@ -260,9 +270,9 @@
                     $full_url = $request_url . $api_key;
                     $response = file_get_contents($full_url);
                     $decoded_array = json_decode($response, true);
-                    echo "<p>Your Team Key: <span class=keys>$team_key</span></p>";
-                    echo "<p>Your Event Key: <span class=keys>$event_key</span></p>";
-                    echo "<p>Request URL: " . $request_url . "(authkey hidden)</p>";
+                    // echo "<p>Your Team Key: <span class=keys>$team_key</span></p>";
+                    // echo "<p>Your Event Key: <span class=keys>$event_key</span></p>";
+                    // echo "<p>Request URL: " . $request_url . "(authkey hidden)</p>";
                     if($decoded_array) {
                         echo "<p>All matches in query:</p>";
 						echo "<div id='matches'>";
@@ -277,8 +287,9 @@
                 else {
                     header("Location: index.html");
                 }
-                virtualKettering();
                 nextMatchPanel();
+                virtualKettering();
+                
             ?>
         </div>
 		<script>
