@@ -219,11 +219,20 @@
                 }
                 function statusPanel($api_key, $event_key) {
                     global $team_key;
-                    $request_url = "https://www.thebluealliance.com/api/v3/team/".$team_key."/event/".$event_key."/stuatus?X-TBA-Auth-Key=".$api_key;
+                    $request_url = "https://www.thebluealliance.com/api/v3/team/".$team_key."/event/".$event_key."/status?X-TBA-Auth-Key=".$api_key;
                     $response = file_get_contents($request_url);
                     $decoded_array = json_decode($response, true);
-                    $status_array = array($decoded_array['qual']);
-                    
+                    // print_r($decoded_array);
+                    echo "<div id='statuspanel'>";
+                    if(isset($decoded_array['qual'])) {
+                        $status_array = array($decoded_array['qual']['ranking']['rank'], $decoded_array['qual']['ranking']['sort_orders'][0]);
+                        echo "<p>Team ".str_replace("frc", "", $team_key)." rank: ".$status_array[0]."</p>";
+                        echo "<p>Average RP: ".$status_array[1]."</p>";
+                    }
+                    else {
+                        echo "<p>Ranking has not been released yet.</p>";
+                    }
+                    echo "</div>";
                 }
                 date_default_timezone_set("America/North_Dakota/Center");
                 if(isset($_POST["team_key"]) && isset($_POST["event_key"])) {
@@ -244,11 +253,15 @@
                     // echo "<p>Request URL: " . $request_url . "(authkey hidden)</p>";
                     if($decoded_array) {
                         // echo "<p>All matches in query:</p>";
+                        echo "<div id='sidebar'>";
 						echo "<div id='matches'>";
                         getAllMatches($decoded_array);
 						echo "</div>";
+                        statusPanel($api_key, $event_key);
+                        echo "</div>";
+                        echo "<div id='maincontent'>";
+                        nextMatchPanel();
 						echo "<div id='counterDiv'><h1 id='counter'></h1></div>";
-                        echo "<img src='logo.png' />";
                     }
                     else {
                         echo "<p>No data was returned from The Blue Alliance.</p>";
@@ -287,9 +300,9 @@
                 else {
                     header("Location: index.html");
                 }
-                nextMatchPanel();
                 virtualKettering();
-                
+                echo "</div>";
+                echo "<img src='logo.png' />";
             ?>
         </div>
 		<script>

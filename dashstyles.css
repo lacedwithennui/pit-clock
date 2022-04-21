@@ -14,25 +14,9 @@ p, td {
 }
 
 h1 {
-    font-size: 8.3vw;
+    font-size: 8.2vw;
     padding: 0;
     margin: 0;
-}
-
-#counterDiv {
-    display: inline-block;
-    position: relative;
-    /* float: right; */
-    margin: 0;
-    width: 51.5%;
-    padding-left: 4.55%;
-}
-
-#matches {
-    display: inline-block;
-    position: relative;
-    float: left;
-    width: 14.33%;
 }
 
 .keys {
@@ -64,20 +48,41 @@ td.redalliance, td.bluealliance {
 #ketteringWrapper {
     display: inline-block;
     position: relative;
-    /* float: right; */
+    float: left;
     margin: 0;
-    width: 51.5%;
-    padding-left: 4.55%;
+    padding-left: 4.55vw;
     /* padding: 0 16.75%; */
 }
 
 #nextpanel {
-    display: inline-block;
+    display: block;
     position: relative;
     float: right;
-    width: 18.5%;
-    padding: 2vh 4.55%
-    /* clear: left; */
+    width: 18.5vw;
+    margin: 2vh 4.55vw;
+    clear: left;
+}
+
+#counterDiv {
+    display: inline-block;
+    position: relative;
+    float: left;
+    margin: 0;
+    padding-left: 4.55vw;
+}
+
+#matches {
+    display: block;
+    position: relative;
+    /* float: left; */
+    /* width: 14.33% */
+}
+
+#sidebar {
+    position: relative;
+    display: inline-block;
+    width: 14.33%;
+    float: left;
 }
 
 #bumper {
@@ -105,4 +110,16 @@ img {
     right: 0;
     padding: 3px;
     /* clear: left; */
+}
+
+#statuspanel {
+    position: relative;
+    /* display: block; */
+    /* float: left; */
+    /* clear: right; */
+}
+
+#maincontent {
+    float: right;
+    width: 83.65%;
 }
