@@ -134,14 +134,9 @@
 					}
                 }
                 function countDown() {
-					global $matches_sorted;
-                    foreach(array_reverse($matches_sorted) as $match_type){
-						if(!empty($match_type)){
-							$match_time = end($match_type)[5];
-							return(date("M d, Y H:i:s", $match_time));
-							break;
-						}
-					}
+					global $next_match;
+                    getNextMatch();
+                    return date("M d, Y H:i:s", $next_match[5]);
                 }
                 function virtualKettering() {
                     global $team_key, $matches_sorted;
@@ -307,11 +302,14 @@
         </div>
 		<script>
 			var matchTime = "<?php echo countDown();?>";
-			var countDownDate = new Date(matchTime).getTime();
+            function convertTime(date) {
+                return new Date((typeof date === "string" ? new Date(date):date).toLocaleString('en-US', {timeZone: 'America/Chicago'}))
+            }
+			var countDownDate = convertTime(new Date(matchTime)).getTime();
 			var x = setInterval(function() {
-			  var now = new Date().getTime();
+			  var now = convertTime(new Date()).getTime();
 			  var distance = countDownDate - now;
-			  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			  var hours = Math.floor(((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))+1);
 			  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 			  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
