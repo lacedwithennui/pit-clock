@@ -16,7 +16,7 @@ function updateTimer() {
     seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
     document.getElementById("counter").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-    document.getElementById("currentTime").innerHTML = "Time: " + new Date();
+    document.getElementById("currentTime").innerHTML = "Time: " + new Date().toLocaleTimeString();
 }
 
 function flicker() {
