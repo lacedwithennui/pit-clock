@@ -143,6 +143,9 @@ td.rank {
     margin: none;
 }
 
+a {
+    color: black;
+}
 #maincontent {
     float: right;
     width: 83.65%;

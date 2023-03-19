@@ -324,7 +324,7 @@
         }
         virtualKettering();
         echo "</div>";
-        echo "<p id='copy'>Copyright Hazel Belmont, FRC 5587 Titan Robotics</p>";
+        echo "<p id='copy'>Copyright Hazel Belmont, FRC 5587 Titan Robotics. <a href='https://github.com/lacedwithennui/pit-clock'>github.com/lacedwithennui/pit-clock</a></p>";
         echo "<img src='logo.png' />";
         ?>
     </div>
