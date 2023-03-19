@@ -31,10 +31,6 @@ h1 {
     color: #ed1c24;
 }
 
-td.redalliance, td.bluealliance {
-    font-weight: 900;
-}
-
 .match {
     font-size: 1.4vw;
     margin: 1em 0;
@@ -43,6 +39,17 @@ td.redalliance, td.bluealliance {
 #kettering td, #kettering th {
     font-size: 1.4vw;
     padding: 0.3vw;
+    padding-bottom: 0 !important;
+    font-weight: 550;
+    margin: 0;
+}
+
+td.redalliance, td.bluealliance {
+    font-weight: 750 !important;
+}
+
+td.matchName {
+    padding-right: 1vw !important;
 }
 
 #ketteringWrapper {
@@ -127,6 +134,13 @@ img {
     /* display: block; */
     /* float: left; */
     /* clear: right; */
+}
+
+td.rank {
+    font-size: 1vw !important;
+    padding: .1vw;
+    padding-top: 0 !important;
+    margin: none;
 }
 
 #maincontent {
