@@ -3,8 +3,8 @@
 
 <head>
     <title>Match Countdown</title>
-    <link rel="stylesheet" href="dashstyles.css">
-    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/dashstyles.css">
+    <link rel="icon" href="assets/favicon.ico">
     <script src="./scripts.js"></script>
 </head>
 
