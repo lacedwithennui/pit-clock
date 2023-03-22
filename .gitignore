@@ -12,3 +12,6 @@ publiccert.pem
 *.pem
 *.crt
 *.csr
+
+# AWS files
+*.zip
