@@ -1,2 +1,14 @@
 # ignore user credentials
 credentials.json
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# ssl files
+privatekey.pem
+publiccert.pem
+*.pem
+*.crt
+*.csr

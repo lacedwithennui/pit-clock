@@ -3,14 +3,17 @@
 	<head>
 		<title>Input Data</title>
 		<link rel="stylesheet" href="inputstyles.css">
+        <script src="./scripts.js"></script>
+        <link rel="icon" href="favicon.ico">
 	</head>
 	<body>
 		<form action="success.php" method="POST">
-			<fieldset>
+			<fieldset id="field">
 				<legend>Input your event information.</legend>
 				<p>Team Key: <input id="team" type="text" name="team_key"></p>
 				<p>Event Key: <input id="event" type="text" name="event_key"></p>
 				<p>Use Latest Event <input id="latest" type="checkbox" name="latest"></p>
+                
 				<input type="submit" value="Enter">
 			</fieldset>
 		</form>
@@ -18,8 +21,10 @@
 			document.getElementById("latest").onchange = function() {
 				document.getElementById("event").disabled = this.checked;
 				document.getElementById("event").value = null;
-				document.getElementById("event").style.backgroundColor = "#404040"
+				document.getElementById("event").style.backgroundColor = "#404040";
 			};
+
+            document.getElementById("field").innerHTML += "<input name='tz_string' style='display: none;' value=" + getTimeZone() + ">";
 		</script>
 	</body>
 </html>

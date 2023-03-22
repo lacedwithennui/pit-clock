@@ -4,6 +4,7 @@
 <head>
     <title>Match Countdown</title>
     <link rel="stylesheet" href="dashstyles.css">
+    <link rel="icon" href="favicon.ico">
     <script src="./scripts.js"></script>
 </head>
 
@@ -22,7 +23,8 @@
         $team_key;
         $event_key;
         $api_key = json_decode(file_get_contents("./credentials.json"), true)["apiKey"];
-        ;
+        $zone_from_js = $_POST["tz_string"];
+        date_default_timezone_set($zone_from_js);
         function addMatchInfo(&$output_array, $checked_array, $match_type)
         {
             global $team_key;
@@ -260,7 +262,6 @@
             echo "<p id='currentTime'>Time: </p>";
             echo "</div>";
         }
-        date_default_timezone_set("America/New_York");
 
         if (isset($_POST["team_key"]) && isset($_POST["event_key"])) {
             global $api_key, $team_key, $event_key;
@@ -274,9 +275,6 @@
             $full_url = $request_url . $api_key;
             $response = file_get_contents($full_url);
             $decoded_array = json_decode($response, true);
-            // echo "<p>Your Team Key: <span class=keys>$team_key</span></p>";
-            // echo "<p>Your Event Key: <span class=keys>$event_key</span></p>";
-            // echo "<p>Request URL: " . $request_url . "(authkey hidden)</p>";
             if ($decoded_array) {
                 // echo "<p>All matches in query:</p>";
                 echo "<div id='sidebar'>";
@@ -288,6 +286,7 @@
                 echo "<div id='maincontent'>";
                 nextMatchPanel();
                 echo "<div id='counterDiv'><h1 id='counter'></h1></div>";
+                virtualKettering();
             } else {
                 echo "<p>No data was returned from The Blue Alliance.</p>";
             }
@@ -316,15 +315,20 @@
                 echo "<div id='maincontent'>";
                 nextMatchPanel();
                 echo "<div id='counterDiv'><h1 id='counter'></h1></div>";
+                virtualKettering();
             } else {
                 echo "<p>No data was returned from The Blue Alliance.</p>";
             }
         } else {
             header("Location: index.html");
         }
-        virtualKettering();
+        
         echo "</div>";
-        echo "<p id='copy'>Copyright Hazel Belmont, FRC 5587 Titan Robotics. <a href='https://github.com/lacedwithennui/pit-clock'>github.com/lacedwithennui/pit-clock</a></p>";
+        echo "<div id='copy'>";
+        echo "<p class='copy'><a href='https://clock.parkerdaletech.com'>clock.parkerdaletech.com</a></p>";
+        echo "<p class='copy'><a href='https://github.com/lacedwithennui/pit-clock'>github.com/lacedwithennui/pit-clock</a></p>";
+        echo "<p class='copy'>Copyright Hazel Belmont, FRC 5587 Titan Robotics.</p>";
+        echo "</div>";
         echo "<img src='logo.png' />";
         ?>
     </div>
