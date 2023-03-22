@@ -19,6 +19,7 @@
         $none = array();
         $matches_sorted = array();
         $ranks = array();
+        $current_match;
         $next_match;
         $team_key;
         $event_key;
@@ -161,6 +162,19 @@
             getNextMatch();
             return date("M d, Y H:i:s", $next_match[5]);
         }
+
+        function getCurrentMatch()
+        {
+            global $current_match, $api_key, $event_key;
+            $event_json = file_get_contents("http://www.thebluealliance.com/api/v3/event/" . $event_key . "/matches/simple?X-TBA-Auth-Key=" . $api_key);
+            $event_matches = json_decode($event_json, true);
+            sort($event_matches);
+            foreach ($event_matches as $match) {
+                if(time() > $match['predicted_time']) {
+                    $current_match = $match['match_number'];
+                }
+            }
+        }
         function virtualKettering()
         {
             global $team_key, $matches_sorted, $ranks;
@@ -200,10 +214,10 @@
                     echo "<tr>";
                     echo "<td class='rank'></td>";
                     for ($i = 0; $i < sizeof($match[3]); $i++) {
-                        echo "<td class='rank'> rnk: " . $ranks[$match[3][$i]]["qual"]["ranking"]["rank"] . "</td>";
+                        echo "<td class='rank'> Rank " . $ranks[$match[3][$i]]["qual"]["ranking"]["rank"] . "</td>";
                     }
                     for ($i = 0; $i < sizeof($match[4]); $i++) {
-                        echo "<td class='rank'> rnk: " . $ranks[$match[4][$i]]["qual"]["ranking"]["rank"] . "</td>";
+                        echo "<td class='rank'> Rank " . $ranks[$match[4][$i]]["qual"]["ranking"]["rank"] . "</td>";
                     }
                     echo "</tr>";
                 }
@@ -232,7 +246,7 @@
         }
         function nextMatchPanel()
         {
-            global $next_match, $team_key;
+            global $next_match, $team_key, $current_match;
             getNextMatch();
             echo "<div id='nextpanel'>";
             echo "<p class='nextpanel'>Next Match: " . $next_match[7] . " " . $next_match[0] . "</p>";
@@ -242,6 +256,8 @@
             } elseif ($next_match[1] == "Blue") {
                 echo "<p id='bumper' class='bluebg'>" . str_replace("frc", "", $team_key) . "</p>";
             }
+            getCurrentMatch();
+            echo "<p class='nextpanel'>Current Match In Play: " . $current_match . "</p>";
             echo "</div>";
         }
         function statusPanel()
@@ -329,7 +345,7 @@
         echo "<p class='copy'><a href='https://github.com/lacedwithennui/pit-clock'>github.com/lacedwithennui/pit-clock</a></p>";
         echo "<p class='copy'>Copyright Hazel Belmont, FRC 5587 Titan Robotics.</p>";
         echo "</div>";
-        echo "<img src='logo.png' />";
+        echo "<img src='assets/logo.png' />";
         ?>
     </div>
     <script>
