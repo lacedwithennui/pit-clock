@@ -13,14 +13,20 @@ function getTimeZone() {
 
 function updateTimer() {
     var countDownDate = new Date(matchTime).getTime();
-    var now = new Date();
-    console.log(now);
-    var distance = countDownDate - now.getTime();
-    hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    var now = new Date().getTime();
+    var distance = countDownDate - now;
+    if(distance < 0) {
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+    }
+    else {
+        hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    }
 
-    document.getElementById("counter").innerHTML = hours+1 + "h " + minutes + "m " + seconds + "s ";
+    document.getElementById("counter").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
     document.getElementById("currentTime").innerHTML = "Time: " + new Date().toLocaleTimeString();
 }
 
