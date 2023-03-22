@@ -47,3 +47,13 @@ p, h1, h2, h3 {
 p {
     font-size: 13pt;
 }
+
+#instructions {
+    position: fixed;
+    float: right;
+    display: block;
+    bottom: 0;
+    left: 0;
+    padding: 8px;
+    margin: 0;
+}

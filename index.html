@@ -13,7 +13,6 @@
 				<p>Team Key: <input id="team" type="text" name="team_key"></p>
 				<p>Event Key: <input id="event" type="text" name="event_key"></p>
 				<p>Use Latest Event <input id="latest" type="checkbox" name="latest"></p>
-                
 				<input type="submit" value="Enter">
 			</fieldset>
 		</form>
@@ -26,5 +25,6 @@
 
             document.getElementById("field").innerHTML += "<input name='tz_string' style='display: none;' value=" + getTimeZone() + ">";
 		</script>
+        <p id="instructions">Instructions and code live at <a href="https://github.com/lacedwithennui/pit-clock" target="_blank">github.com/lacedwithennui/pit-clock</a>.</p>
 	</body>
 </html>
