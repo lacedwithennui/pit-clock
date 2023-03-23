@@ -369,6 +369,7 @@
         tzString = "<?php echo $zone_from_js; ?>";
         var matchTime = "<?php date_default_timezone_set($_POST['tz_string']); echo countDown(); ?>";
         var refreshInterval = <?php echo $_POST['refresh'] == "" || !isset($_POST['refresh']) || $_POST['refresh'] < 1 ? "2" : json_encode($_POST['refresh']); ?>;
+        alarmMinutes = <?php echo $_POST['alarm'] == "" || !isset($_POST['alarm']) || $_POST['alarm'] < 1 ? "17" : json_encode($_POST['alarm']); ?>;
         updateTimer();
         setInterval(updateTimer, 1000);
         setInterval(flicker, 500);

@@ -2,13 +2,10 @@ var hours;
 var minutes;
 var seconds;
 var tzString;
+var alarmMinutes;
 
 function convertTime(date) {
-    // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
-    console.log(date.toLocaleTimeString());
     tz = date.toLocaleString('en-US', {timeZone: tzString});
-    console.log(tz);
-    console.log(tzString)
     return new Date(tz);
 }
 
@@ -36,7 +33,7 @@ function updateTimer() {
 }
 
 function flicker() {
-    if (hours == 0 && minutes <= 17 && (seconds > 55 || (seconds <= 30 && seconds > 25)) && document.body.style.backgroundColor == "white") {
+    if (hours == 0 && minutes <= parseInt(alarmMinutes) && (seconds > 55 || (seconds <= 30 && seconds > 25)) && document.body.style.backgroundColor == "white") {
         document.body.style.backgroundColor = window.getComputedStyle(document.getElementById("bumper")).backgroundColor;
     }
     else {
