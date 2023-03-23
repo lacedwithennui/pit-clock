@@ -128,10 +128,9 @@ td.matchName {
 }
 
 #sidebar {
-    position: relative;
-    display: inline-block;
+    /* position: relative;
+    display: inline-block; */
     width: 18.19vw;
-    float: left;
     padding-left: 0.5vw;
 }
 
