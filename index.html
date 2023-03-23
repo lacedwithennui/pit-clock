@@ -13,15 +13,26 @@
 				<p>Team Key: <input id="team" type="text" name="team_key"></p>
 				<p>Event Key: <input id="event" type="text" name="event_key"></p>
 				<p>Use Latest Event <input id="latest" type="checkbox" name="latest"></p>
-				<input type="submit" value="Enter">
+                <p><input class="inputButtons" id="advanced" type="button" name="advanced" value="Advanced Options" onclick="toggleOptions()"></p>
+                <div id="options" style="display: none;">
+                    <p>Refresh Interval (minutes): <input id="refresh" type="text" name="refresh"></p>
+                    <p>Time Zone String Override: <input id="tz_manual" type="text" name="tz_manual"></p>
+                </div>
+				<input class="inputButtons" type="submit" value="Enter">
 			</fieldset>
 		</form>
 		<script>
+            var optionsDisplayed = false;
 			document.getElementById("latest").onchange = function() {
 				document.getElementById("event").disabled = this.checked;
 				document.getElementById("event").value = null;
-				document.getElementById("event").style.backgroundColor = "#404040";
+				document.getElementById("event").style.backgroundColor = document.getElementById("event").disabled ? "#404040" : "#191919";
 			};
+
+            function toggleOptions() {
+                optionsDisplayed ? optionsDisplayed = false : optionsDisplayed = true;
+                document.getElementById("options").style.display = optionsDisplayed ? "inline" : "none";
+            }
 
             document.getElementById("field").innerHTML += "<input name='tz_string' style='display: none;' value=" + getTimeZone() + ">";
 		</script>

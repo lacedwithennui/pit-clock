@@ -24,7 +24,7 @@
         $team_key;
         $event_key;
         $api_key = json_decode(file_get_contents("./credentials.json"), true)["apiKey"];
-        $zone_from_js = $_POST["tz_string"];
+        $zone_from_js = $_POST["tz_manual"] != "" ? $_POST["tz_manual"] : $_POST["tz_string"];
         date_default_timezone_set($zone_from_js);
         function addMatchInfo(&$output_array, $checked_array, $match_type)
         {
@@ -149,12 +149,24 @@
                 itemsort($unsorted, "0");
                 array_push($matches_sorted, $unsorted);
             }
-            foreach ($matches_sorted as $matches) {
-                foreach ($matches as $match) {
-                    printMatch($match, end($match));
-                    printMatchInfo($match);
+            $ranks_sorted = $ranks;
+            $sorter = array();
+            foreach($ranks_sorted as $unsorted) {
+                $sorter[$unsorted["qual"]["ranking"]["rank"]] = $unsorted;
+            }
+            $ranks_sorted = $sorter;
+            $qual_keys = array_map(function($val) { return $val['qual']; }, $ranks);
+            sort($qual_keys);
+            for ($i=1; $i < count($ranks_sorted) + 1; $i++) {
+                if($i == 1 || $i == intval(count($ranks_sorted)/2)+2) {
+                    echo "<div class='column'>";
+                }
+                echo "<p class='rankings'>" . "Rank " . $ranks_sorted[$i]["qual"]["ranking"]["rank"] . ": " . str_replace("frc", "", $ranks_sorted[$i]["qual"]["ranking"]["team_key"]) . "</p>";
+                if($i == intval(count($ranks_sorted)/2)+1 || $i == count($ranks_sorted)) {
+                    echo "</div>";
                 }
             }
+            echo "</div>";
         }
         function countDown()
         {
@@ -294,15 +306,19 @@
             if ($decoded_array) {
                 // echo "<p>All matches in query:</p>";
                 echo "<div id='sidebar'>";
+                statusPanel();
                 echo "<div id='matches'>";
                 getAllMatches($decoded_array);
                 echo "</div>";
-                statusPanel();
+                
                 echo "</div>";
-                echo "<div id='maincontent'>";
-                nextMatchPanel();
+                // echo "<div id='maincontent'>";
+                echo "<div id='centerContent'>";
                 echo "<div id='counterDiv'><h1 id='counter'></h1></div>";
                 virtualKettering();
+                echo "</div>";
+                nextMatchPanel();
+                // echo "</div>";
             } else {
                 echo "<p>No data was returned from The Blue Alliance.</p>";
             }
@@ -328,18 +344,19 @@
                 echo "</div>";
                 statusPanel();
                 echo "</div>";
-                echo "<div id='maincontent'>";
-                nextMatchPanel();
+                // echo "<div id='maincontent'>";
+                echo "<div id='centerContent'>";
                 echo "<div id='counterDiv'><h1 id='counter'></h1></div>";
                 virtualKettering();
+                echo "</div>";
+                nextMatchPanel();
+                // echo "</div>";
             } else {
                 echo "<p>No data was returned from The Blue Alliance.</p>";
             }
         } else {
             header("Location: index.html");
         }
-        
-        echo "</div>";
         echo "<div id='copy'>";
         echo "<p class='copy'><a href='https://clock.parkerdaletech.com'>clock.parkerdaletech.com</a></p>";
         echo "<p class='copy'><a href='https://github.com/lacedwithennui/pit-clock'>github.com/lacedwithennui/pit-clock</a></p>";
@@ -349,13 +366,15 @@
         ?>
     </div>
     <script>
-        var matchTime = "<?php echo countDown(); ?>";
+        tzString = "<?php echo $zone_from_js; ?>";
+        var matchTime = "<?php date_default_timezone_set($_POST['tz_string']); echo countDown(); ?>";
+        var refreshInterval = <?php echo $_POST['refresh'] == "" || !isset($_POST['refresh']) || $_POST['refresh'] < 1 ? "2" : json_encode($_POST['refresh']); ?>;
         updateTimer();
         setInterval(updateTimer, 1000);
         setInterval(flicker, 500);
         setInterval(
             'location.reload()'
-        , 120000);
+        , parseInt(refreshInterval) * 60000);
     </script>
 </body>
 

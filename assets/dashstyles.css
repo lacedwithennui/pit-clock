@@ -8,7 +8,7 @@ p, td {
     font-weight: bold;
 }
 
-body, #phpHolder {
+body {
     /* width: max-content; */
     /* position: absolute;
     top: 0;
@@ -16,6 +16,7 @@ body, #phpHolder {
     bottom: 0;
     right: 0; */
     width: 100vw;
+    display: flex;
     margin: 0;
 }
 
@@ -28,7 +29,7 @@ body, #phpHolder {
 h1 {
     font-size: 8.2vw;
     padding: 0;
-    margin: 0;
+    margin: auto;
 }
 
 .keys {
@@ -44,16 +45,21 @@ h1 {
 }
 
 .match {
-    font-size: 1.4vw;
+    font-size: 1.8vw;
     margin: 1em 0;
 }
 
+.rankings {
+    margin: 0.5em 0;
+}
+
 #kettering td, #kettering th {
-    font-size: 1.4vw;
+    font-size: 1.3vw;
     padding: 0.3vw;
     padding-bottom: 0 !important;
     font-weight: 550;
     margin: 0;
+    text-align: center;
 }
 
 td.redalliance, td.bluealliance {
@@ -65,38 +71,60 @@ td.matchName {
 }
 
 #ketteringWrapper {
-    display: inline-block;
+    display: flex;
+    justify-content: center;
     position: relative;
     /* float: left; */
-    margin: 0;
     /* margin-left: 4.55vw; */
     padding-bottom: 2vw;
     /* padding: 0 16.75%; */
 }
 
+#centerContent {
+    /* width: 54.02vw; */
+    /* margin: auto; */
+    /* display: inline-block; */
+    /* justify-content: center; */
+    flex-direction: column;
+    justify-content: center;
+    align-self: flex-start;
+    flex-grow: 1;
+}
+
 #nextpanel {
-    display: block;
+    /* display: block;
     position: relative;
     float: right;
     width: 18.19vw;
-    /* margin: 2vh 4.55vw; */
-    margin: 2vh 0 0 4.55vw;
-    clear: left;
+    margin: 2vh 4.55vw;
+    margin: 2vh 0 0 0;
+    clear: left; */
+    display: flex;
+    width: 18.19vw;
+    margin: 2vh 0 0 0;
+    flex-direction: column;
 }
 
 #counterDiv {
-    display: inline-block;
+    /* display: inline-block; */
     position: relative;
-    float: left;
-    margin: 0;
+    /* float: left; */
+    text-align: center;
+    /* margin: auto; */
+    display: flex;
+    justify-content: center;
     /* padding-left: 4.55vw; */
 }
 
 #matches {
-    display: block;
+    display: flex;
     position: relative;
     /* float: left; */
     /* width: 14.33% */
+}
+
+.column {
+    flex: 50%;
 }
 
 #sidebar {
@@ -149,6 +177,10 @@ p.copy {
     margin-bottom: 0;
 }
 
+#statuspanel p {
+    font-size: 1.8vw;
+}
+
 #statuspanel {
     position: relative;
     /* display: block; */
@@ -157,18 +189,19 @@ p.copy {
 }
 
 td.rank {
-    font-size: 0.8vw !important;
+    font-size: 0.6vw !important;
     padding: 0 .1vw .1vw .1vw !important;
+    text-align: center;
     margin: none;
 }
 
 a {
     color: black;
 }
-#maincontent {
+/* #maincontent {
     float: right;
     width: 76.76vw;
     padding: 0;
     margin-left: 4.55vw;
-    /* clear: left !important; */
-}
+    /* clear: left !important;
+} */

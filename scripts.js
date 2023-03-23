@@ -1,10 +1,15 @@
 var hours;
 var minutes;
 var seconds;
+var tzString;
 
 function convertTime(date) {
     // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
-    return new Date((typeof date === "date" ? date : new Date(date)).toLocaleString());
+    console.log(date.toLocaleTimeString());
+    tz = date.toLocaleString('en-US', {timeZone: tzString});
+    console.log(tz);
+    console.log(tzString)
+    return new Date(tz);
 }
 
 function getTimeZone() {
@@ -12,8 +17,8 @@ function getTimeZone() {
 }
 
 function updateTimer() {
-    var countDownDate = new Date(matchTime).getTime();
-    var now = new Date().getTime();
+    var countDownDate = convertTime(new Date(matchTime)).getTime();
+    var now = convertTime(new Date()).getTime();
     var distance = countDownDate - now;
     if(distance < 0) {
         hours = 0;
