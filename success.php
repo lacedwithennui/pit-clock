@@ -291,7 +291,7 @@
             echo "</div>";
         }
 
-        if (isset($_POST["team_key"]) && isset($_POST["event_key"])) {
+        if (isset($_POST["team_key"]) && !isset($_POST["latest"])) {
             global $api_key, $team_key, $event_key;
             if (strpos($_POST["team_key"], "frc") !== false) {
                 $team_key = $_POST["team_key"];
@@ -320,7 +320,7 @@
                 nextMatchPanel();
                 // echo "</div>";
             } else {
-                echo "<p>No data was returned from The Blue Alliance.</p>";
+                echo "<p>No data was returned from The Blue Alliance. Team Key: ".$team_key.". Event Key: ". $event_key .".</p>";
             }
         } elseif (isset($_POST["team_key"]) && isset($_POST["latest"])) {
             global $api_key, $team_key, $event_key;
@@ -332,12 +332,18 @@
             $event_request_url = "http://www.thebluealliance.com/api/v3/team/" . $team_key . "/events/simple?X-TBA-Auth-Key=" . $api_key;
             $event_response = file_get_contents($event_request_url);
             $decoded_event = json_decode($event_response, true);
-            $event_key = end($decoded_event)["key"];
+            $start_date_holder = date_create_immutable_from_format("Y-m-d", "1970-1-1");
+            foreach($decoded_event as $event) {
+                if(date_create_immutable_from_format("Y-m-d", $event["start_date"]) > $start_date_holder) {
+                    $start_date_holder = date_create_immutable_from_format("Y-m-d", $event["start_date"]);
+                    $event_key = $event["key"];
+                }
+            }
             $request_url = "http://www.thebluealliance.com/api/v3/team/" . $team_key . "/event/" . $event_key . "/matches/simple?X-TBA-Auth-Key=";
             $full_url = $request_url . $api_key;
             $response = file_get_contents($full_url);
             $decoded_array = json_decode($response, true);
-            if ($decoded_array) {
+            if ($decoded_array && !empty($decoded_array)) {
                 echo "<div id='sidebar'>";
                 echo "<div id='matches'>";
                 getAllMatches($decoded_array);
@@ -352,7 +358,7 @@
                 nextMatchPanel();
                 // echo "</div>";
             } else {
-                echo "<p>No data was returned from The Blue Alliance.</p>";
+                echo "<p>No data was returned from The Blue Alliance.</p><p>Team Key: ".$team_key.". Event Key: ". $event_key .".</p>";
             }
         } else {
             header("Location: index.html");
