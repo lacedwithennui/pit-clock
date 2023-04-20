@@ -269,7 +269,7 @@
                 echo "<p id='bumper' class='bluebg'>" . str_replace("frc", "", $team_key) . "</p>";
             }
             getCurrentMatch();
-            echo "<p class='nextpanel'>Current Match In Play: " . $current_match . "</p>";
+            echo "<p class='nextpanel'>Current Match In Play: " . $current_match + 1 . "</p>";
             echo "</div>";
         }
         function statusPanel()
@@ -285,7 +285,7 @@
                 echo "<p>Team " . str_replace("frc", "", $team_key) . " rank: " . $status_array[0] . "</p>";
                 echo "<p>Average RP: " . $status_array[1] . "</p>";
             } else {
-                echo "<p>Ranking has not been released yet.</p>";
+                echo "<p style='font-size: 1em'>Ranking has not been released yet.</p>";
             }
             echo "<p id='currentTime'>Time: </p>";
             echo "</div>";
