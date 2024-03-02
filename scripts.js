@@ -28,8 +28,10 @@ function updateTimer() {
         seconds = Math.floor((distance % (1000 * 60)) / 1000);
     }
 
-    document.getElementById("counter").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-    document.getElementById("currentTime").innerHTML = "Time: " + new Date().toLocaleTimeString();
+    document.getElementById("counter").innerHTML = hours + "h " + minutes + "m"// " + seconds + "s ";
+    // document.getElementById("currentTime").innerHTML = "Time: " + new Date().toLocaleTimeString();
+    let currentTime = new Date().toLocaleTimeString();
+    document.getElementById("currentTime").innerHTML = currentTime.split(":")[0] + ":" + currentTime.split(":")[1] + " " + currentTime.split(" ")[1];
 }
 
 function flicker() {

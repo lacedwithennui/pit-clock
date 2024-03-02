@@ -30,6 +30,7 @@ h1 {
     font-size: 8.2vw;
     padding: 0;
     margin: auto;
+    text-align: center;
 }
 
 .keys {
@@ -88,6 +89,7 @@ td.matchName {
     /* justify-content: center; */
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     align-self: flex-start;
     flex-grow: 1;
 }
@@ -205,3 +207,7 @@ a {
     margin-left: 4.55vw;
     /* clear: left !important;
 } */
+
+table {
+    border-collapse: collapse;
+}

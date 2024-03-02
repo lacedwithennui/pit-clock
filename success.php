@@ -71,7 +71,7 @@
             echo "<tr>";
             for ($i = 0; $i < sizeof($match[3]); $i++) {
                 if ($match[3][$i] == $team_key) {
-                    echo "<td class='redalliance'>" . str_replace("frc", "", $match[3][$i]) . "</td>";
+                    echo "<td class='redalliance " ."" /*== 2 ? "border" : ""*/ . "'>" . str_replace("frc", "", $match[3][$i]) . "</td>";
                 } else {
                     echo "<td>" . str_replace("frc", "", $match[3][$i]) . "</td>";
                 }
@@ -209,16 +209,16 @@
                     echo "<td class='matchName'>" . $match[7] . " " . $match[0] . "</td>";
                     for ($i = 0; $i < sizeof($match[3]); $i++) {
                         if ($match[3][$i] == $team_key) {
-                            echo "<td class='redalliance'>" . str_replace("frc", "", $match[3][$i]) . "</td>";
+                            echo "<td class='redalliance' " . (($i == 2) ? "style='border-right: 2px black solid'" : "") . ">" . str_replace("frc", "", $match[3][$i]) . "</td>";
                         } else {
-                            echo "<td>" . str_replace("frc", "", $match[3][$i]) . "</td>";
+                            echo "<td " . (($i == 2) ? "style='border-right: 2px black solid'" : "") . ">" . str_replace("frc", "", $match[3][$i]) . "</td>";
                         }
                     }
                     for ($i = 0; $i < sizeof($match[4]); $i++) {
                         if ($match[4][$i] == $team_key) {
-                            echo "<td class='bluealliance'>" . str_replace("frc", "", $match[4][$i]) . "</td>";
+                            echo "<td class='bluealliance' " . (($i == 0) ? "style='border-left: 2px black solid'" : "") . ">" . str_replace("frc", "", $match[4][$i]) . "</td>";
                         } else {
-                            echo "<td>" . str_replace("frc", "", $match[4][$i]) . "</td>";
+                            echo "<td " . (($i == 0) ? "style='border-left: 2px black solid'" : "") . ">" . str_replace("frc", "", $match[4][$i]) . "</td>";
                         }
                     }
                     echo "<td>" . date("M d H:i:s", $match[5]) . "</td>";
@@ -226,10 +226,10 @@
                     echo "<tr>";
                     echo "<td class='rank'></td>";
                     for ($i = 0; $i < sizeof($match[3]); $i++) {
-                        echo "<td class='rank'> Rank " . $ranks[$match[3][$i]]["qual"]["ranking"]["rank"] . "</td>";
+                        echo "<td class='rank' " . (($i == 2) ? "style='border-right: 2px black solid'" : "") . "> Rank " . $ranks[$match[3][$i]]["qual"]["ranking"]["rank"] . "</td>";
                     }
                     for ($i = 0; $i < sizeof($match[4]); $i++) {
-                        echo "<td class='rank'> Rank " . $ranks[$match[4][$i]]["qual"]["ranking"]["rank"] . "</td>";
+                        echo "<td class='rank' " . (($i == 0) ? "style='border-left: 2px black solid'" : "") . "> Rank " . $ranks[$match[4][$i]]["qual"]["ranking"]["rank"] . "</td>";
                     }
                     echo "</tr>";
                 }
@@ -287,7 +287,7 @@
             } else {
                 echo "<p style='font-size: 1em'>Ranking has not been released yet.</p>";
             }
-            echo "<p id='currentTime'>Time: </p>";
+            // echo "<p id='currentTime'>Time: </p>"; //NOTE: Here is the current time thing originally!
             echo "</div>";
         }
 
@@ -316,6 +316,7 @@
                 echo "<div id='centerContent'>";
                 echo "<div id='counterDiv'><h1 id='counter'></h1></div>";
                 virtualKettering();
+                echo "<h1 id='currentTime'></h1>";
                 echo "</div>";
                 nextMatchPanel();
                 // echo "</div>";
@@ -364,7 +365,8 @@
             header("Location: index.html");
         }
         echo "<div id='copy'>";
-        echo "<p class='copy'><a href='https://clock.parkerdaletech.com'>clock.parkerdaletech.com</a></p>";
+        // echo "<p class='copy'><a href='https://clock.parkerdaletech.com'>clock.parkerdaletech.com</a></p>";
+        echo "<p class='copy'>Event Key: ".$event_key."</p>";
         echo "<p class='copy'><a href='https://github.com/lacedwithennui/pit-clock'>github.com/lacedwithennui/pit-clock</a></p>";
         echo "<p class='copy'>Copyright Hazel Belmont, FRC 5587 Titan Robotics.</p>";
         echo "</div>";
