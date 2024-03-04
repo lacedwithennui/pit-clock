@@ -94,7 +94,7 @@
             echo "</tr>";
             echo "</table>";
             // echo "<p>Alliance Members: "; print $match[3][0] ." ". $match[3][1] ." ". $match[3][2]; echo "</p>";
-            echo "<p>Match Time: " . date("M d H:i:s", $match[5]) . "</p>";
+            echo "<p>Match Time: " . date("D H:i:s", $match[5]) . "</p>";
             echo "</div>";
         }
         function getAllMatches($array)
@@ -183,7 +183,7 @@
             sort($event_matches);
             foreach ($event_matches as $match) {
                 if(time() > $match['predicted_time']) {
-                    $current_match = $match['match_number'];
+                    $current_match = $match;
                 }
             }
         }
@@ -221,7 +221,8 @@
                             echo "<td " . (($i == 0) ? "style='border-left: 2px black solid'" : "") . ">" . str_replace("frc", "", $match[4][$i]) . "</td>";
                         }
                     }
-                    echo "<td>" . date("M d H:i:s", $match[5]) . "</td>";
+                    // echo "<td>" . date("M j g:i A", $match[5]) . "</td>";
+                    echo "<td>" . date("D g:i A", $match[5]) . "</td>";
                     echo "</tr>";
                     echo "<tr>";
                     echo "<td class='rank'></td>";
@@ -256,6 +257,22 @@
                 }
             }
         }
+        function compLevelToHumanReadable($comp_level) {
+            switch ($comp_level) {
+                case "qm":
+                    return "Qualifiers";
+                case "ef":
+                    return "Eighths Finals";
+                case "qf":
+                    return "Quarterfinals";
+                case "sf":
+                    return "Semifinals";
+                case "f":
+                    return "Finals";
+                default:
+                    return "Not Specified";
+            }
+        }
         function nextMatchPanel()
         {
             global $next_match, $team_key, $current_match;
@@ -269,7 +286,7 @@
                 echo "<p id='bumper' class='bluebg'>" . str_replace("frc", "", $team_key) . "</p>";
             }
             getCurrentMatch();
-            echo "<p class='nextpanel'>Current Match In Play: " . $current_match + 1 . "</p>";
+            echo "<p class='nextpanel'>Current Match In Play: " . compLevelToHumanReadable($current_match["comp_level"]) . " " . $current_match["match_number"] + 1 . "</p>";
             echo "</div>";
         }
         function statusPanel()
